@@ -11,7 +11,7 @@ const avatar = multer({
   },
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      cb(new Error("This format isn't supported"));
+      cb(new Error("unsupported file format"));
     }
     cb(undefined, true);
   }
@@ -138,7 +138,7 @@ router.delete("/users/me/avatar", auth, async (req, res) => {
     res.status(500).send();
   }
 });
-router.get("/users/:id/avatar", async (req, res) => {
+router.get("/users/avatar/:id", async (req, res) => {
   try {
     const user = await User.findById({ _id: req.params.id });
     if (!user || !user.avatar) {
